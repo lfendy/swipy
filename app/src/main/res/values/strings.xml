@@ -3,6 +3,8 @@
 
     <string name="app_name">swipy</string>
     <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="dummy_content">Main Activity, you have won the previous trophy</string>
+    <string name="trophy_text">YAY TROPHY</string>
+    <string name="title_activity_trophy">TrophyActivity</string>
 
 </resources>
