@@ -3,6 +3,7 @@ package cheesy.ultra.mundane.trophies.swipy;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -115,8 +116,9 @@ public class MainActivity extends Activity {
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
-
-
+        if(!isCanHazWonFirstTrophy()){
+            startTrophyActivity();
+        }
     }
 
     @Override
@@ -163,7 +165,17 @@ public class MainActivity extends Activity {
     }
 
     public void onDummyButtonClickListener(View v){
+        startTrophyActivity();
+    }
+
+    public void startTrophyActivity() {
         Intent intent = new Intent(this,TrophyActivity.class);
         startActivity(intent);
     }
+
+    private boolean isCanHazWonFirstTrophy(){
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
+        return prefs.getBoolean(getString(R.string.first_trophy),false);
+    }
+
 }

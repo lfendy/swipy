@@ -2,6 +2,7 @@ package cheesy.ultra.mundane.trophies.swipy;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -112,6 +113,7 @@ public class TrophyActivity extends Activity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        setHazWonTrophy();
     }
 
     @Override
@@ -155,5 +157,10 @@ public class TrophyActivity extends Activity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    private void setHazWonTrophy(){
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
+        prefs.edit().putBoolean(getString(R.string.first_trophy), true); //still hardcoded -- need params
     }
 }
