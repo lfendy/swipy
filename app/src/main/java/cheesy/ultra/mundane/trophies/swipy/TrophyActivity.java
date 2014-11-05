@@ -161,6 +161,8 @@ public class TrophyActivity extends Activity {
 
     private void setHazWonTrophy(){
         SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
-        prefs.edit().putBoolean(getString(R.string.first_trophy), true); //still hardcoded -- need params
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(getString(R.string.first_trophy), true); //still hardcoded -- need params
+        editor.commit();
     }
 }
