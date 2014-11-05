@@ -162,7 +162,7 @@ public class MainActivity extends Activity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    private void onDummyButtonClickListener(){
+    public void onDummyButtonClickListener(View v){
         Log.e("JOEBLOE", "I WAS CLICKED");
     }
 }
