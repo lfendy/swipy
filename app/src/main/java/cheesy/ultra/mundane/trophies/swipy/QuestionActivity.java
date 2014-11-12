@@ -2,16 +2,15 @@ package cheesy.ultra.mundane.trophies.swipy;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import cheesy.ultra.mundane.trophies.swipy.questions.HardcodedQs;
 import cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider;
-
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -19,15 +18,15 @@ import cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider;
  *
  * @see SystemUiHider
  */
-public class MainActivity extends Activity {
-
+public class QuestionActivity extends Activity {
+    public static String CURRENT_QUESTION = "current question";
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static final boolean AUTO_HIDE = true;
 
-   /**
+    /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
      */
@@ -53,10 +52,15 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_question);
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
+
+        HardcodedQs.Question question = (HardcodedQs.Question) getIntent().getSerializableExtra(CURRENT_QUESTION);
+        String questionText = HardcodedQs.getQuestion(question);
+        TextView tv = (TextView) findViewById(R.id.fullscreen_content);
+        tv.setText(questionText);
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
@@ -112,17 +116,10 @@ public class MainActivity extends Activity {
             }
         });
 
-        if(!isCanHazWonFirstTrophy()){
-            startTrophyActivity();
-        } else {
-            startQuestionActivity(HardcodedQs.Question.are_you_at_work);
-        }
-    }
-
-    private void startQuestionActivity(HardcodedQs.Question current) {
-        Intent intent = new Intent(this, QuestionActivity.class);
-        intent.putExtra(QuestionActivity.CURRENT_QUESTION, current);
-        startActivity(intent);
+        // Upon interacting with UI controls, delay any scheduled hide()
+        // operations to prevent the jarring behavior of controls going away
+        // while interacting with the UI.
+        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override
@@ -134,6 +131,22 @@ public class MainActivity extends Activity {
         // are available.
         delayedHide(100);
     }
+
+
+    /**
+     * Touch listener to use for in-layout UI controls to delay hiding the
+     * system UI. This is to prevent the jarring behavior of controls going away
+     * while interacting with activity UI.
+     */
+    View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (AUTO_HIDE) {
+                delayedHide(AUTO_HIDE_DELAY_MILLIS);
+            }
+            return false;
+        }
+    };
 
     Handler mHideHandler = new Handler();
     Runnable mHideRunnable = new Runnable() {
@@ -151,19 +164,4 @@ public class MainActivity extends Activity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
-
-    public void onDummyButtonClickListener(View v){
-        startTrophyActivity();
-    }
-
-    public void startTrophyActivity() {
-        Intent intent = new Intent(this,TrophyActivity.class);
-        startActivity(intent);
-    }
-
-    private boolean isCanHazWonFirstTrophy(){
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
-        return prefs.getBoolean(getString(R.string.first_trophy),false);
-    }
-
 }

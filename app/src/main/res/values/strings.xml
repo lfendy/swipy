@@ -13,5 +13,6 @@
     <string name="first_trophy">First_trophy</string>
     <string name="title_activity_question_two">QuestionTwoActivity</string>
     <string name="title_activity_question_three">QuestionThreeActivity</string>
+    <string name="title_activity_question">QuestionActivity</string>
 
 </resources>
