@@ -4,9 +4,14 @@
     <string name="app_name">swipy</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">Main Activity, you have won the previous trophy</string>
+    <string name="question_one">R U @ work ?</string>
+    <string name="question_two">In front of desk ?</string>
+    <string name="question_three">watching NSFW ?</string>
     <string name="trophy_text">YAY TROPHY</string>
     <string name="title_activity_trophy">TrophyActivity</string>
     <string name="preference_file">SwipyPrefs</string>
     <string name="first_trophy">First_trophy</string>
+    <string name="title_activity_question_two">QuestionTwoActivity</string>
+    <string name="title_activity_question_three">QuestionThreeActivity</string>
 
 </resources>

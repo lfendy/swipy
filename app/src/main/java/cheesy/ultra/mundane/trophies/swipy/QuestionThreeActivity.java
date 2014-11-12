@@ -2,14 +2,12 @@ package cheesy.ultra.mundane.trophies.swipy;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
-import cheesy.ultra.mundane.trophies.swipy.util.OnSwipeTouchListener;
 import cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider;
 
 /**
@@ -18,7 +16,7 @@ import cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider;
  *
  * @see SystemUiHider
  */
-public class TrophyActivity extends Activity {
+public class QuestionThreeActivity extends Activity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -51,7 +49,7 @@ public class TrophyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_trophy);
+        setContentView(R.layout.activity_question_three);
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
@@ -113,22 +111,7 @@ public class TrophyActivity extends Activity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
-        setHazWonTrophy();
-        contentView.setOnTouchListener(new OnSwipeTouchListener(this) {
-            @Override
-            public void onSwipeLeft() {
-                Toast.makeText(TrophyActivity.this, "SWIPE LEFT MOTHER FUCKER", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-
-            @Override
-            public void onSwipeRight() {
-                Toast.makeText(TrophyActivity.this, "SWIPE RIGHT MOTHER FUCKER", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-
-        });
+        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override
@@ -147,15 +130,15 @@ public class TrophyActivity extends Activity {
      * system UI. This is to prevent the jarring behavior of controls going away
      * while interacting with activity UI.
      */
-//    View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-//        @Override
-//        public boolean onTouch(View view, MotionEvent motionEvent) {
-//            if (AUTO_HIDE) {
-//                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-//            }
-//            return false;
-//        }
-//    };
+    View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (AUTO_HIDE) {
+                delayedHide(AUTO_HIDE_DELAY_MILLIS);
+            }
+            return false;
+        }
+    };
 
     Handler mHideHandler = new Handler();
     Runnable mHideRunnable = new Runnable() {
@@ -174,10 +157,5 @@ public class TrophyActivity extends Activity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    private void setHazWonTrophy(){
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(getString(R.string.first_trophy), true); //still hardcoded -- need params
-        editor.commit();
-    }
+
 }

@@ -117,10 +117,12 @@ public class MainActivity extends Activity {
             @Override
             public void onSwipeLeft(){
                 Toast.makeText(MainActivity.this, "SWIPE LEFT MOTHER FUCKER", Toast.LENGTH_SHORT).show();
+                startQuestionTwoActivity();
             }
             @Override
             public void onSwipeRight(){
                 Toast.makeText(MainActivity.this, "SWIPE RIGHT MOTHER FUCKER", Toast.LENGTH_SHORT).show();
+                startQuestionTwoActivity();
             }
 
         });
@@ -169,6 +171,13 @@ public class MainActivity extends Activity {
     private boolean isCanHazWonFirstTrophy(){
         SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
         return prefs.getBoolean(getString(R.string.first_trophy),false);
+    }
+
+    // Question two activity
+
+    public void startQuestionTwoActivity() {
+        Intent intent = new Intent(this, QuestionTwoActivity.class);
+        startActivity(intent);
     }
 
 }
