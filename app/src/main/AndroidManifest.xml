@@ -42,6 +42,12 @@
             android:label="@string/title_activity_question"
             android:theme="@style/FullscreenTheme" >
         </activity>
+        <activity
+            android:name=".EndActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_end"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
     </application>
 
 </manifest>

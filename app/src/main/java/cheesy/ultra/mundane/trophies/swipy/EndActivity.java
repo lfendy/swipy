@@ -2,17 +2,12 @@ package cheesy.ultra.mundane.trophies.swipy;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import cheesy.ultra.mundane.trophies.swipy.questions.HardcodedQs;
-import cheesy.ultra.mundane.trophies.swipy.util.OnSwipeTouchListener;
 import cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider;
 
 /**
@@ -21,8 +16,7 @@ import cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider;
  *
  * @see SystemUiHider
  */
-public class QuestionActivity extends Activity {
-    public static String CURRENT_QUESTION = "current question";
+public class EndActivity extends Activity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -55,15 +49,10 @@ public class QuestionActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_question);
+        setContentView(R.layout.activity_end);
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
-
-        final HardcodedQs.Question currentQuestion = (HardcodedQs.Question) getIntent().getSerializableExtra(CURRENT_QUESTION);
-        String questionText = HardcodedQs.getQuestion(currentQuestion);
-        TextView tv = (TextView) contentView;
-        tv.setText(questionText);
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
@@ -119,37 +108,10 @@ public class QuestionActivity extends Activity {
             }
         });
 
-        contentView.setOnTouchListener(new OnSwipeTouchListener(this) {
-            @Override
-            public void onSwipeLeft(){
-                Toast.makeText(QuestionActivity.this, "SWIPE LEFT MOTHER FUCKER", Toast.LENGTH_SHORT).show();
-                startNextQuestionActivity(HardcodedQs.getNextQuestion(currentQuestion));
-                finish();
-            }
-            @Override
-            public void onSwipeRight(){
-                Toast.makeText(QuestionActivity.this, "SWIPE RIGHT MOTHER FUCKER", Toast.LENGTH_SHORT).show();
-                startNextQuestionActivity(HardcodedQs.getNextQuestion(currentQuestion));
-                finish();
-            }
-
-        });
-
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
-    }
-
-    private void startNextQuestionActivity(HardcodedQs.Question next) {
-        if(next == HardcodedQs.Question.end){
-            Intent intent = new Intent(this, EndActivity.class);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(this, QuestionActivity.class);
-            intent.putExtra(QuestionActivity.CURRENT_QUESTION, next);
-            startActivity(intent);
-        }
     }
 
     @Override

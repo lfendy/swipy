@@ -4,6 +4,8 @@
     <string name="app_name">swipy</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">Main Activity, you have won the previous trophy</string>
+    <string name="main">Main Activity</string>
+    <string name="end">U haf reachd da END !</string>
     <string name="question_one">R U @ work ?</string>
     <string name="question_two">In front of desk ?</string>
     <string name="question_three">watching NSFW ?</string>
@@ -14,5 +16,6 @@
     <string name="title_activity_question_two">QuestionTwoActivity</string>
     <string name="title_activity_question_three">QuestionThreeActivity</string>
     <string name="title_activity_question">QuestionActivity</string>
+    <string name="title_activity_end">EndActivity</string>
 
 </resources>
