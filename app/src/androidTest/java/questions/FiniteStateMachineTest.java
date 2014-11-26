@@ -31,8 +31,7 @@ public class FiniteStateMachineTest extends AndroidTestCase{
 
    * */
 
-
-    public void testWillReturnStateForYes(){
+    public void testWillReturnStateForYesAndNo(){
         String[][] states = {
                 {"office", "r u @ office?",     "q"},
                 {"fart",   "did u just FART?!", "q"},
@@ -45,11 +44,10 @@ public class FiniteStateMachineTest extends AndroidTestCase{
         };
 
         FiniteStateMachine fsm = new FiniteStateMachine(states, transitions);
-        State nextState = fsm.getNextState("office", Transition.Type.YES);
-        assertEquals("fart", nextState.getId());
+        State nextYesState = fsm.getNextState("office", Transition.Type.YES);
+        assertEquals("fart", nextYesState.getId());
+        State nextNoState = fsm.getNextState("office", Transition.Type.NO);
+        assertEquals("awol", nextNoState.getId());
     }
-
-
-
 
 }
