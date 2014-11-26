@@ -15,7 +15,7 @@ public final class HardcodedQs {
             "desk,  in front of desk?, q\n" +
             "pc,    @ pc?,             q\n" +
             "nsfw,  watching NSFW?,    q\n," +
-            "boobs, b00bs!, t" ;
+            "boobs, b00bs!,            t" ;
 
 
     /* StartNode, Response, EndNode */
