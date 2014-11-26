@@ -2,12 +2,12 @@ package questions;
 
 import android.test.AndroidTestCase;
 
-import cheesy.ultra.mundane.trophies.swipy.questions.Node;
+import cheesy.ultra.mundane.trophies.swipy.questions.State;
 
 /**
  * Created by lfendy on 26/11/14.
  */
-public class NodeTest extends AndroidTestCase {
+public class StateTest extends AndroidTestCase {
    /*
    given
    [[nodeid, nodeText, nodeType]]
@@ -30,13 +30,13 @@ public class NodeTest extends AndroidTestCase {
    * */
 
 
-   public void testWillParseNodeFromArray(){
+   public void testWillParseFromArray(){
        String[] rawData = {"fart","Did u just FART?! MOFO?!?!?","q"};
-       Node q = new Node(rawData);
+       State q = new State(rawData);
 
        assertEquals("fart", q.getId());
        assertEquals("Did u just FART?! MOFO?!?!?", q.getText());
-       assertEquals(Node.NodeType.Question, q.getType());
+       assertEquals(State.Type.Question, q.getType());
 
    }
 

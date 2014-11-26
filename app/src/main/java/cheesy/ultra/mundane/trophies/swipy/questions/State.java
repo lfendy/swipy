@@ -3,17 +3,17 @@ package cheesy.ultra.mundane.trophies.swipy.questions;
 /**
  * Created by lfendy on 26/11/14.
  */
-public class Node {
+public class State {
 
-    public enum NodeType {
+    public enum Type {
         Question
     }
 
     private String id;
     private String text;
-    private NodeType type;
+    private Type type;
 
-    public Node(String[] rawData) {
+    public State(String[] rawData) {
         id = rawData[0];
         text = rawData[1];
         type = getTypeFrom(rawData[2]);
@@ -27,13 +27,13 @@ public class Node {
         return text;
     }
 
-    public NodeType getType() {
+    public Type getType() {
         return type;
     }
 
-    private NodeType getTypeFrom(String t){
+    private Type getTypeFrom(String t){
         if("q".equalsIgnoreCase(t)) {
-            return NodeType.Question;
+            return Type.Question;
         }
         return null;
     }
