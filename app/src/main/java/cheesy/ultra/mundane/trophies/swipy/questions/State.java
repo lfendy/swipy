@@ -11,18 +11,20 @@ public class State {
             mId = id;
         }
 
-        public String getId(){
+        public String getInnerId(){
           return mId;
         }
 
         @Override
         public boolean equals(Object id1) {
-            return mId.equals(((Id) id1).getId());
+            return mId.equals(((Id) id1).getInnerId());
         }
     }
 
     public enum Type {
-        Question
+        Question,
+        Trophy,
+        Fail
     }
 
     private Id id;
@@ -50,6 +52,10 @@ public class State {
     private Type getTypeFrom(String t){
         if("q".equalsIgnoreCase(t)) {
             return Type.Question;
+        } else if("f".equalsIgnoreCase(t)) {
+            return Type.Fail;
+        } else if("t".equalsIgnoreCase(t)) {
+            return Type.Trophy;
         }
         return null;
     }

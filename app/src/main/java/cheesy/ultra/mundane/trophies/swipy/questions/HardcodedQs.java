@@ -12,15 +12,15 @@ public final class HardcodedQs {
     // [[]]
     //
 
-    private String[][] rawStates = {
-            {"1", "R u @ werk?", "q"},
+    private static String[][] rawStates = {
+            {"1", "yo, mofo, R u @ werk?", "q"},
             {"2", "front of desk?", "q"},
             {"3", "watching NSFW?", "q"},
             {"4", "Risk taker trophy!", "t"},
             {"5", "U suck.", "f"}
     };
 
-    private String[][] rawTransition = {
+    private static String[][] rawTransitions = {
             {"1", "2", "Y"},
             {"1", "5", "N"},
             {"2", "3", "Y"},
@@ -75,6 +75,8 @@ public final class HardcodedQs {
                 new Option(Question.watching_nsfw,Question.fail));
         mNextQuestions.put(Question.watching_nsfw,
                 new Option(Question.win, Question.fail));
+
+        mFsm = new FiniteStateMachine(rawStates, rawTransitions);
     }
 
     public static String getQuestion(Question q){
@@ -87,6 +89,22 @@ public final class HardcodedQs {
 
     public static Question getNoOption(Question q) {
         return mNextQuestions.get(q).getmNo();
+    }
+
+    public static State getFirstQuestion(){
+        return mFsm.getFirstState();
+    }
+
+    public static State getAfterYes(State.Id s){
+        return mFsm.getNextState(s, Transition.Type.YES);
+    }
+
+    public static State getAfterNo(State.Id s){
+        return mFsm.getNextState(s, Transition.Type.NO);
+    }
+
+    public static State getQuestionFromState(State.Id id){
+        return mFsm.getState(id);
     }
 
 

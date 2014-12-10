@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.View;
 
 import cheesy.ultra.mundane.trophies.swipy.questions.HardcodedQs;
+import cheesy.ultra.mundane.trophies.swipy.questions.State;
 import cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider;
 
 
@@ -115,13 +116,13 @@ public class MainActivity extends Activity {
         if(!isCanHazWonFirstTrophy()){
             startTrophyActivity();
         } else {
-            startQuestionActivity(HardcodedQs.Question.are_you_at_work);
+            startQuestionActivity(HardcodedQs.getFirstQuestion().getId());
         }
     }
 
-    private void startQuestionActivity(HardcodedQs.Question current) {
+    private void startQuestionActivity(State.Id current) {
         Intent intent = new Intent(this, QuestionActivity.class);
-        intent.putExtra(QuestionActivity.CURRENT_QUESTION, current);
+        intent.putExtra(QuestionActivity.CURRENT_QUESTION, current.getInnerId());
         startActivity(intent);
     }
 

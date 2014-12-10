@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cheesy.ultra.mundane.trophies.swipy.questions.HardcodedQs;
+import cheesy.ultra.mundane.trophies.swipy.questions.State;
 import cheesy.ultra.mundane.trophies.swipy.util.OnSwipeTouchListener;
 import cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider;
 
@@ -56,8 +57,8 @@ public class QuestionActivity extends Activity {
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
 
-        final HardcodedQs.Question currentQuestion = (HardcodedQs.Question) getIntent().getSerializableExtra(CURRENT_QUESTION);
-        String questionText = HardcodedQs.getQuestion(currentQuestion);
+        final State.Id currentQuestionId = new State.Id((String) getIntent().getSerializableExtra(CURRENT_QUESTION));
+        String questionText = HardcodedQs.getQuestionFromState(currentQuestionId).getText();
         TextView tv = (TextView) contentView;
         tv.setText(questionText);
 
@@ -118,14 +119,14 @@ public class QuestionActivity extends Activity {
         contentView.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeLeft(){
-                Toast.makeText(QuestionActivity.this, "SWIPE LEFT MOTHER FUCKER", Toast.LENGTH_SHORT).show();
-                startNextQuestionActivity(HardcodedQs.getNoOption(currentQuestion));
+                Toast.makeText(QuestionActivity.this, "SWIPE LEFT YO!", Toast.LENGTH_SHORT).show();
+                startNextQuestionActivity(HardcodedQs.getAfterNo(currentQuestionId));
                 finish();
             }
             @Override
             public void onSwipeRight(){
-                Toast.makeText(QuestionActivity.this, "SWIPE RIGHT MOTHER FUCKER", Toast.LENGTH_SHORT).show();
-                startNextQuestionActivity(HardcodedQs.getYesOption(currentQuestion));
+                Toast.makeText(QuestionActivity.this, "SWIPE RIGHT YO!", Toast.LENGTH_SHORT).show();
+                startNextQuestionActivity(HardcodedQs.getAfterYes(currentQuestionId));
                 finish();
             }
 
@@ -137,16 +138,16 @@ public class QuestionActivity extends Activity {
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
-    private void startNextQuestionActivity(HardcodedQs.Question next) {
-        if(next == HardcodedQs.Question.fail){
+    private void startNextQuestionActivity(State next) {
+        if(next.getType() == State.Type.Fail){
             Intent intent = new Intent(this, EndActivity.class);
             startActivity(intent);
-        } else if (next == HardcodedQs.Question.win) {
+        } else if (next.getType() == State.Type.Trophy) {
             Intent intent = new Intent(this, TrophyActivity.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, QuestionActivity.class);
-            intent.putExtra(QuestionActivity.CURRENT_QUESTION, next);
+            intent.putExtra(QuestionActivity.CURRENT_QUESTION, next.getId().getInnerId());
             startActivity(intent);
         }
     }
