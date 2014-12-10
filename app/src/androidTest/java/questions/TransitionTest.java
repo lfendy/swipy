@@ -2,6 +2,7 @@ package questions;
 
 import android.test.AndroidTestCase;
 
+import cheesy.ultra.mundane.trophies.swipy.questions.State;
 import cheesy.ultra.mundane.trophies.swipy.questions.Transition;
 
 /**
@@ -14,8 +15,8 @@ public class TransitionTest extends AndroidTestCase{
        String[] rawData = {"fart","loud","y"};
        Transition t = new Transition(rawData);
 
-       assertEquals("fart", t.getFromState());
-       assertEquals("loud", t.getToState());
+       assertEquals(new State.Id("fart"), t.getFromState());
+       assertEquals(new State.Id("loud"), t.getToState());
        assertEquals(Transition.Type.YES, t.getType());
    }
 

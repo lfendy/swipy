@@ -1,11 +1,12 @@
 package cheesy.ultra.mundane.trophies.swipy.questions;
 
+
 /**
  * Created by lfendy on 26/11/14.
  */
 public class Transition {
-    private String fromState;
-    private String toState;
+    private State.Id fromState;
+    private State.Id toState;
     private Type type;
 
     public enum Type {
@@ -14,8 +15,8 @@ public class Transition {
     }
 
     public Transition(String[] rawData) {
-        fromState = rawData[0];
-        toState = rawData[1];
+        fromState = new State.Id(rawData[0]);
+        toState = new State.Id(rawData[1]);
         type = getTypeFrom(rawData[2]);
     }
 
@@ -28,11 +29,11 @@ public class Transition {
         return null;
     }
 
-    public String getFromState() {
+    public State.Id getFromState() {
         return fromState;
     }
 
-    public String getToState() {
+    public State.Id getToState() {
         return toState;
     }
 

@@ -14,7 +14,7 @@ public class StateTest extends AndroidTestCase {
        String[] rawData = {"fart","Did u just FART?! MOFO?!?!?","q"};
        State q = new State(rawData);
 
-       assertEquals("fart", q.getId());
+       assertEquals(new State.Id("fart"), q.getId());
        assertEquals("Did u just FART?! MOFO?!?!?", q.getText());
        assertEquals(State.Type.Question, q.getType());
 

@@ -5,21 +5,37 @@ package cheesy.ultra.mundane.trophies.swipy.questions;
  */
 public class State {
 
+    public static class Id {
+        private String mId;
+        public Id(String id){
+            mId = id;
+        }
+
+        public String getId(){
+          return mId;
+        }
+
+        @Override
+        public boolean equals(Object id1) {
+            return mId.equals(((Id) id1).getId());
+        }
+    }
+
     public enum Type {
         Question
     }
 
-    private String id;
+    private Id id;
     private String text;
     private Type type;
 
     public State(String[] rawData) {
-        id = rawData[0];
+        id = new Id(rawData[0]);
         text = rawData[1];
         type = getTypeFrom(rawData[2]);
     }
 
-    public String getId() {
+    public Id getId() {
         return id;
     }
 

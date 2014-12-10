@@ -2,6 +2,8 @@ package questions;
 
 import android.test.AndroidTestCase;
 
+import java.util.Random;
+
 import cheesy.ultra.mundane.trophies.swipy.questions.FiniteStateMachine;
 import cheesy.ultra.mundane.trophies.swipy.questions.State;
 import cheesy.ultra.mundane.trophies.swipy.questions.Transition;
@@ -31,7 +33,7 @@ public class FiniteStateMachineTest extends AndroidTestCase{
 
    * */
 
-    public void testWillReturnStateForYesAndNo(){
+    public void testWillReturnNextStateForYesAndNo(){
         String[][] states = {
                 {"office", "r u @ office?",     "q"},
                 {"fart",   "did u just FART?!", "q"},
@@ -44,10 +46,31 @@ public class FiniteStateMachineTest extends AndroidTestCase{
         };
 
         FiniteStateMachine fsm = new FiniteStateMachine(states, transitions);
-        State nextYesState = fsm.getNextState("office", Transition.Type.YES);
-        assertEquals("fart", nextYesState.getId());
-        State nextNoState = fsm.getNextState("office", Transition.Type.NO);
-        assertEquals("awol", nextNoState.getId());
+        State nextYesState = fsm.getNextState(new State.Id("office"), Transition.Type.YES);
+        assertEquals(new State.Id("fart"), nextYesState.getId());
+        State nextNoState = fsm.getNextState(new State.Id("office"), Transition.Type.NO);
+        assertEquals(new State.Id("awol"), nextNoState.getId());
     }
+
+    public void testWillReturnFirstState(){
+        Random random = new Random();
+        String randomString = String.format("%d", random.nextInt());
+        String[][] states = {
+                {randomString, "r u @ office?",     "q"},
+                {"fart",   "did u just FART?!", "q"},
+                {"awol",   "did u skip work?",  "q"}
+        };
+
+        String[][] transitions = {
+                {"office", "fart", "y"},
+                {"office", "awol", "n"}
+        };
+
+        FiniteStateMachine fsm = new FiniteStateMachine(states, transitions);
+        State firstState = fsm.getFirstState();
+        assertEquals(new State.Id(randomString), firstState.getId());
+    }
+
+
 
 }

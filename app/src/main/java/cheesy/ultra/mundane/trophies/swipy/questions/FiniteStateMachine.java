@@ -25,23 +25,27 @@ public class FiniteStateMachine {
 
     }
 
-    public State getNextState(String from, Transition.Type answer) {
+    public State getNextState(State.Id from, Transition.Type answer) {
 
         for(Transition t:this.transitions)
         {
-            if(from==t.getFromState() && answer==t.getType()) {
+            if(from.equals(t.getFromState()) && answer==t.getType()) {
                 return this.getState(t.getToState());
             }
         }
         return null;
     }
 
-    private State getState(String toState) {
+    public State getState(State.Id stateId) {
         for(State s:this.states)
         {
-            if(s.getId()==toState)
+            if(s.getId().equals(stateId))
                 return s;
         }
         return null;
+    }
+
+    public State getFirstState() {
+        return states.get(0);
     }
 }
