@@ -30,4 +30,4 @@ if [ ! -e ${INITIALIZATION_FILE} ]; then
   # echo y | android update sdk --no-ui --filter sys-img-armeabi-v7a-android-19 --all > /dev/null
 
   touch ${INITIALIZATION_FILE}
-fi
+fi 
