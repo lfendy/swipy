@@ -16,7 +16,7 @@ public class TransitionTest extends AndroidTestCase{
        Transition t = new Transition(rawData);
 
        assertEquals(new State.Id("fart"), t.getFromState());
-       assertEquals(new State.Id("loud"), t.getToState());
+       assertEquals(new State.Id("lod"), t.getToState());
        assertEquals(Transition.Type.YES, t.getType());
    }
 
