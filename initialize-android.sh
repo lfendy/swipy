@@ -20,7 +20,7 @@ if [ ! -e ${INITIALIZATION_FILE} ]; then
   echo y | android update sdk --no-ui --filter android-20 > /dev/null
 
   # uncomment to install the Extra/Android Support Library
-  # echo y | android update sdk --no-ui --filter extra-android-support --all > /dev/null
+  echo y | android update sdk --no-ui --filter extra-android-support --all > /dev/null
 
   # uncomment these if you are using maven/gradle to build your android project
    echo y | android update sdk --no-ui --filter extra-google-m2repository --all > /dev/null
