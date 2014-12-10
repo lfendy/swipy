@@ -8,22 +8,8 @@ import java.util.Map;
  */
 public final class HardcodedQs {
 
-    /* nodes
-       nodeId, text, type */
-    private String mNodes =
-            "werk,  r u @ werk?,       q\n" +
-            "desk,  in front of desk?, q\n" +
-            "pc,    @ pc?,             q\n" +
-            "nsfw,  watching NSFW?,    q\n," +
-            "boobs, b00bs!,            t" ;
-
-
-    /* StartNode, Response, EndNode */
-    private String mEdges =
-            "werk, y, desk\n" +
-            "desk, y, pc\n" +
-            "pc,   y, nswf\n" +
-            "nsfw, y, living-on-the-edge";
+    //write questions in terms states and transitions
+    //
 
 
 
