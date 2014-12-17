@@ -35,7 +35,7 @@ public final class HardcodedQs {
     }
 
     public static State getFirstQuestion(){
-        return mFsm.getFirstState();
+        return mFsm.getFirstQuestionState();
     }
 
     public static State getAfterYes(State.Id s){

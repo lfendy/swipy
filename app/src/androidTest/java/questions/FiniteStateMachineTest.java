@@ -67,8 +67,28 @@ public class FiniteStateMachineTest extends AndroidTestCase{
         };
 
         FiniteStateMachine fsm = new FiniteStateMachine(states, transitions);
-        State firstState = fsm.getFirstState();
+        State firstState = fsm.getFirstQuestionState();
         assertEquals(new State.Id(randomString), firstState.getId());
+    }
+
+    public void testWillReturnFirstNonTrophy(){
+        Random random = new Random();
+        String randomString = String.format("%d", random.nextInt());
+        String randomString2 = String.format("%d", random.nextInt());
+        String[][] states = {
+                {randomString, "r u @ office?",     "t"},
+                {randomString2,   "did u just FART?!", "q"},
+                {"awol",   "did u skip work?",  "q"}
+        };
+
+        String[][] transitions = {
+                {"office", "fart", "y"},
+                {"office", "awol", "n"}
+        };
+
+        FiniteStateMachine fsm = new FiniteStateMachine(states, transitions);
+        State firstState = fsm.getFirstQuestionState();
+        assertEquals(new State.Id(randomString2), firstState.getId());
     }
 
 

@@ -45,7 +45,12 @@ public class FiniteStateMachine {
         return null;
     }
 
-    public State getFirstState() {
-        return states.get(0);
+    public State getFirstQuestionState() {
+        for(State state : states){
+            if(state.getType() == State.Type.Question){
+                return state;
+            }
+        }
+        return null;
     }
 }
