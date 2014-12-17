@@ -1,11 +1,13 @@
 package cheesy.ultra.mundane.trophies.swipy.questions;
 
+import java.io.Serializable;
+
 /**
  * Created by lfendy on 26/11/14.
  */
 public class State {
 
-    public static class Id {
+    public static class Id implements Serializable{
         private String mId;
         public Id(String id){
             mId = id;
