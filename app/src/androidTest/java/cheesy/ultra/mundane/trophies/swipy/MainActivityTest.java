@@ -19,23 +19,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class MainActivityTest {
 
     @Test
-    public void willRememberFirstTrophy(){
-        //Given First Time (no pref saved)
-        //When MainActivity Create
+    public void willShowTrophyForTheFirstTime(){
+
         Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
 
         ShadowActivity shadowHome = Robolectric.shadowOf(activity);
-        //Then pref saved
-        SharedPreferences prefs = activity.getSharedPreferences(activity.getString(R.string.preference_file), activity.MODE_PRIVATE);
 
         assertThat(shadowHome.peekNextStartedActivityForResult().intent.getComponent(), equalTo(new ComponentName(activity, TrophyActivity.class)));
-    }
-
-    @Test
-    public void willShowTrophyForTheFirstTime(){
-        //Given First Time (no pref saved)
-        //When MainActivity Create
-        //Then Trophy starts
     }
 
     @Test
