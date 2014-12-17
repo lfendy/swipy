@@ -159,6 +159,7 @@ public class MainActivity extends Activity {
 
     public void startTrophyActivity() {
         Intent intent = new Intent(this,TrophyActivity.class);
+        intent.putExtra(TrophyActivity.CURRENT_STATE, "0");
         startActivity(intent);
     }
 
