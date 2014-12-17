@@ -5,7 +5,7 @@ package cheesy.ultra.mundane.trophies.swipy.questions;
  */
 public final class HardcodedQs {
 
-    //write questions in terms states and transitions
+    //write cheesy.ultra.mundane.trophies.swipy.questions in terms states and transitions
     // [[]]
     //
 
