@@ -1,15 +1,20 @@
 package questions;
 
-import android.test.AndroidTestCase;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import cheesy.ultra.mundane.trophies.swipy.questions.State;
 
-/**
- * Created by lfendy on 26/11/14.
- */
-public class StateTest extends AndroidTestCase {
+import static org.junit.Assert.assertEquals;
 
+@Config(manifest = "./src/main/AndroidManifest.xml")
+@RunWith(RobolectricTestRunner.class)
+public class StateTest{
 
+   @Test
    public void testWillParseFromArray(){
        String[] rawData = {"fart","Did u just FART?! MOFO?!?!?","q"};
        State q = new State(rawData);

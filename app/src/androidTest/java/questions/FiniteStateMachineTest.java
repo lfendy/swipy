@@ -1,6 +1,9 @@
 package questions;
 
-import android.test.AndroidTestCase;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.Random;
 
@@ -8,10 +11,11 @@ import cheesy.ultra.mundane.trophies.swipy.questions.FiniteStateMachine;
 import cheesy.ultra.mundane.trophies.swipy.questions.State;
 import cheesy.ultra.mundane.trophies.swipy.questions.Transition;
 
-/**
- * Created by lfendy on 26/11/14.
- */
-public class FiniteStateMachineTest extends AndroidTestCase{
+import static org.junit.Assert.assertEquals;
+
+@Config(manifest = "./src/main/AndroidManifest.xml")
+@RunWith(RobolectricTestRunner.class)
+public class FiniteStateMachineTest{
 
    /*
    given
@@ -33,6 +37,7 @@ public class FiniteStateMachineTest extends AndroidTestCase{
 
    * */
 
+    @Test
     public void testWillReturnNextStateForYesAndNo(){
         String[][] states = {
                 {"office", "r u @ office?",     "q"},
@@ -52,6 +57,7 @@ public class FiniteStateMachineTest extends AndroidTestCase{
         assertEquals(new State.Id("awol"), nextNoState.getId());
     }
 
+    @Test
     public void testWillReturnFirstState(){
         Random random = new Random();
         String randomString = String.format("%d", random.nextInt());

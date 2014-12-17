@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cheesy.ultra.mundane.trophies.swipy" >
 
+    <uses-sdk android:minSdkVersion="18"
+        android:targetSdkVersion="18"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"

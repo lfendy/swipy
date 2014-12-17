@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'robolectric'
+
 
 android {
     compileSdkVersion 20
@@ -7,7 +9,7 @@ android {
     defaultConfig {
         applicationId "cheesy.ultra.mundane.trophies.swipy"
         minSdkVersion 15
-        targetSdkVersion 20
+        targetSdkVersion     20
         versionCode 1
         versionName "1.0"
     }
@@ -26,4 +28,25 @@ dependencies {
     // You must install or update the Support Repository through the SDK manager to use this dependency.
     // You must install or update the Support Repository through the SDK manager to use this dependency.
     compile 'com.android.support:support-v4:19.+'
+
+    androidTestCompile 'org.robolectric:robolectric:2.3'
+    androidTestCompile('junit:junit:4.11') {
+        exclude module: 'hamcrest-core'
+    }
+}
+
+robolectric {
+    // configure the set of classes for JUnit tests
+    include '**/*Test.class'
+    exclude '**/espresso/**/*.class'
+
+    // configure max heap size of the test JVM
+    maxHeapSize = '2048m'
+
+    // configure whether failing tests should fail the build
+    ignoreFailures false
+
+    afterTest { descriptor, result ->
+        println "Executing test for ${descriptor.name} with result: ${result.resultType}"
+    }
 }
