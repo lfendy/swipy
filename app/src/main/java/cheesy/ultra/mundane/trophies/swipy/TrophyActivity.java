@@ -72,6 +72,6 @@ public class TrophyActivity extends Activity {
         SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(getString(R.string.first_trophy), true); //still hardcoded -- need params
-        editor.commit();
+        editor.apply();
     }
 }
