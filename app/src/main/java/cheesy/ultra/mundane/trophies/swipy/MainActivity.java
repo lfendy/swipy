@@ -153,12 +153,8 @@ public class MainActivity extends Activity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    public void onDummyButtonClickListener(View v){
-        startTrophyActivity();
-    }
-
     public void startTrophyActivity() {
-        Intent intent = new Intent(this,TrophyActivity.class);
+        Intent intent = new Intent(this, TrophyActivity.class);
         intent.putExtra(TrophyActivity.CURRENT_STATE, "0");
         startActivity(intent);
     }

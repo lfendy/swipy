@@ -2,7 +2,9 @@ package cheesy.ultra.mundane.trophies.swipy;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.TextView;
 
@@ -49,6 +51,7 @@ public class TrophyActivity extends Activity {
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,8 +2,12 @@ package cheesy.ultra.mundane.trophies.swipy;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,9 +52,14 @@ public class QuestionActivity extends Activity {
      */
     private SystemUiHider mSystemUiHider;
 
+
+    private Point windowSize;
+    private Point layoutSize;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_question);
 
@@ -61,23 +70,69 @@ public class QuestionActivity extends Activity {
         TextView tv = (TextView) contentView;
         tv.setText(questionText);
 
+        Display display = getWindowManager().getDefaultDisplay();
+        windowSize = new Point();
+        display.getSize(windowSize);
 
-        contentView.setOnTouchListener(new OnSwipeTouchListener(this) {
-            @Override
-            public void onSwipeLeft(){
-                Toast.makeText(QuestionActivity.this, "SWIPE LEFT YO!", Toast.LENGTH_SHORT).show();
-                startNextQuestionActivity(HardcodedQs.getAfterNo(currentQuestionId));
-                finish();
-            }
-            @Override
-            public void onSwipeRight(){
-                Toast.makeText(QuestionActivity.this, "SWIPE RIGHT YO!", Toast.LENGTH_SHORT).show();
-                startNextQuestionActivity(HardcodedQs.getAfterYes(currentQuestionId));
-                finish();
-            }
+        layoutSize = new Point((int)(windowSize.x * (8f / 10f)), (int)(windowSize.y * (8f / 10f)));
+        tv.setWidth(layoutSize.x);
+        tv.setHeight(layoutSize.y);
 
+        resetTextView(tv);
+
+        tv.setOnTouchListener(new View.OnTouchListener() {
+            int touchStartX, touchStartY;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int touchX = (int)event.getRawX();
+                int touchY = (int)event.getRawY();
+
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        touchStartX = touchX;
+                        touchStartY = touchY;
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        moveTextView(v, touchX - touchStartX, touchY - touchStartY);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        if(isYes(touchX)){
+                            startNextQuestionActivity(HardcodedQs.getAfterYes(currentQuestionId));
+                            finish();
+                        }else if (isNo(touchX)){
+                            startNextQuestionActivity(HardcodedQs.getAfterNo(currentQuestionId));
+                            finish();
+                        }else{
+                            resetTextView(v);
+                        }
+
+                        break;
+                }
+                return true;
+            }
         });
+    }
 
+    private void resetTextView(View tv) {
+        tv.setX((windowSize.x - layoutSize.x) / 2);
+        tv.setY((windowSize.y - layoutSize.y) / 2);
+    }
+
+    private void moveTextView(View v, int x_coord, int y_coord) {
+        v.setX((windowSize.x - layoutSize.x) / 2 + x_coord);
+        v.setY((windowSize.y - layoutSize.y) / 2 + y_coord);
+
+    }
+
+    private boolean isYes(int deltaX) {
+        return deltaX > windowSize.x * .75;
+    }
+
+    private boolean isNo(int deltaX) {
+        return deltaX < windowSize.x * .25;
     }
 
     private void startNextQuestionActivity(State next) {
