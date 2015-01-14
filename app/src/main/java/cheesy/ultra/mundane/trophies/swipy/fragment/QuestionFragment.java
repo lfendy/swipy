@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import cheesy.ultra.mundane.trophies.swipy.EndActivity;
+import cheesy.ultra.mundane.trophies.swipy.MainActivity;
 import cheesy.ultra.mundane.trophies.swipy.R;
 import cheesy.ultra.mundane.trophies.swipy.TrophyActivity;
 import cheesy.ultra.mundane.trophies.swipy.questions.HardcodedQs;
@@ -125,11 +126,11 @@ public class QuestionFragment extends Fragment {
     private void startNextQuestionActivity(State next) {
         if(next.getType() == State.Type.Fail){
             Intent intent = new Intent(getActivity(), EndActivity.class);
-            startActivity(intent);
+            getActivity().startActivityForResult(intent, MainActivity.REQ_CODE_TROPHY);
         } else if (next.getType() == State.Type.Trophy) {
             Intent intent = new Intent(getActivity(), TrophyActivity.class);
             intent.putExtra(TrophyActivity.CURRENT_STATE, next.getId().getInnerId());
-            startActivity(intent);
+            getActivity().startActivityForResult(intent, MainActivity.REQ_CODE_TROPHY);
         } else {
             replaceFragment(next);
         }
