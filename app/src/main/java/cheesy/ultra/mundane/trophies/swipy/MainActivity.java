@@ -3,11 +3,14 @@ package cheesy.ultra.mundane.trophies.swipy;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import cheesy.ultra.mundane.trophies.swipy.fragment.NavigationDrawerFragment;
+import cheesy.ultra.mundane.trophies.swipy.fragment.QuestionFragment;
+import cheesy.ultra.mundane.trophies.swipy.questions.HardcodedQs;
 import cheesy.ultra.mundane.trophies.swipy.questions.State;
 import cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider;
 
@@ -27,7 +30,7 @@ public class MainActivity extends ActionBarActivity
      */
     private static final boolean AUTO_HIDE = true;
 
-   /**
+    /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
      */
@@ -122,17 +125,25 @@ public class MainActivity extends ActionBarActivity
 //            }
 //        });
 
-        if(!isCanHazWonFirstTrophy()){
+        if (!isCanHazWonFirstTrophy()) {
             startTrophyActivity();
         } else {
-            // startQuestionActivity(HardcodedQs.getFirstQuestion().getId());
+            startQuestionFragment(HardcodedQs.getFirstQuestion().getId());
         }
     }
 
-    private void startQuestionActivity(State.Id current) {
-        Intent intent = new Intent(this, QuestionActivity.class);
-        intent.putExtra(QuestionActivity.CURRENT_QUESTION, current.getInnerId());
-        startActivity(intent);
+    private void startQuestionFragment(State.Id current) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString(QuestionFragment.CURRENT_QUESTION, current.getInnerId());
+
+        QuestionFragment frag = new QuestionFragment();
+        frag.setArguments(bundle);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, frag)
+                .commit();
     }
 
     @Override
@@ -161,16 +172,15 @@ public class MainActivity extends ActionBarActivity
 //        mHideHandler.removeCallbacks(mHideRunnable);
 //        mHideHandler.postDelayed(mHideRunnable, delayMillis);
 //    }
-
     public void startTrophyActivity() {
         Intent intent = new Intent(this, TrophyActivity.class);
         intent.putExtra(TrophyActivity.CURRENT_STATE, "0");
         startActivity(intent);
     }
 
-    private boolean isCanHazWonFirstTrophy(){
+    private boolean isCanHazWonFirstTrophy() {
         SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
-        return prefs.getBoolean(getString(R.string.first_trophy),false);
+        return prefs.getBoolean(getString(R.string.first_trophy), false);
     }
 
 
