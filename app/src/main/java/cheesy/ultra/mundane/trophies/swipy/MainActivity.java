@@ -11,14 +11,13 @@ import cheesy.ultra.mundane.trophies.swipy.fragment.NavigationDrawerFragment;
 import cheesy.ultra.mundane.trophies.swipy.fragment.QuestionFragment;
 import cheesy.ultra.mundane.trophies.swipy.questions.HardcodedQs;
 import cheesy.ultra.mundane.trophies.swipy.questions.State;
-import cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider;
 
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  *
- * @see SystemUiHider
+ * @see cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider
  */
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {

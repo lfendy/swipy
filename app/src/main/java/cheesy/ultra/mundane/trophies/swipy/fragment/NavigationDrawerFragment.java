@@ -2,7 +2,6 @@ package cheesy.ultra.mundane.trophies.swipy.fragment;
 
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -24,7 +23,7 @@ import android.widget.ListView;
 import cheesy.ultra.mundane.trophies.swipy.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link android.app.Fragment} subclass.
  */
 public class NavigationDrawerFragment extends android.support.v4.app.Fragment {
 

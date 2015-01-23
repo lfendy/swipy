@@ -1,0 +1,33 @@
+evaluationDependsOn(":app")
+apply plugin: 'java'
+
+dependencies {
+
+    def androidModule = project(':app')
+    testCompile project(path: ':app', configuration: 'debugCompile')
+
+    def debugVariant = androidModule.android.applicationVariants.find({it.name == 'debug'})
+    testCompile debugVariant.javaCompile.classpath
+    testCompile debugVariant.javaCompile.outputs.files
+    testCompile files(androidModule.plugins.findPlugin("com.android.application").getBootClasspath())
+
+    compile 'junit:junit:4.11'
+    compile 'org.robolectric:robolectric:2.4'
+}
+
+task localTest(type: Test) {
+    scanForTestClasses = false
+    include "**/*Should.class"
+    include "**/*Test.class"
+    include "**/*Tests.class"
+    exclude "**/*IT.class"
+
+    ignoreFailures false
+
+    beforeTest { descriptor ->
+        println "Running tests"
+    }
+    afterTest { descriptor, result ->
+        println "Executing test for ${descriptor.name} with result: ${result.resultType}"
+    }
+}

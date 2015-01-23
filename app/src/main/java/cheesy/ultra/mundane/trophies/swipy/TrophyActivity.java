@@ -2,9 +2,7 @@ package cheesy.ultra.mundane.trophies.swipy;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
 import android.widget.TextView;
 

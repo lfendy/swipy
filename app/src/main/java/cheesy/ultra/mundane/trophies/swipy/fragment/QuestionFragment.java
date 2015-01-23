@@ -20,7 +20,7 @@ import cheesy.ultra.mundane.trophies.swipy.questions.HardcodedQs;
 import cheesy.ultra.mundane.trophies.swipy.questions.State;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class QuestionFragment extends Fragment {
     public static String CURRENT_QUESTION = "current question";

@@ -2,15 +2,14 @@ package cheesy.ultra.mundane.trophies.swipy.questions;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.Random;
 
+import cheesy.ultra.mundane.trophies.swipy.RobolectricGradleTestRunner;
+
 import static org.junit.Assert.assertEquals;
 
-@Config(manifest = "./src/main/AndroidManifest.xml")
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
 public class FiniteStateMachineTest{
 
    /*
