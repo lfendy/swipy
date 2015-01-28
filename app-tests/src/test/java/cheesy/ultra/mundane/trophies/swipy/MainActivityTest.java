@@ -17,12 +17,12 @@ public class MainActivityTest {
 
     @Test
     public void testWillShowTrophyForTheFirstTime(){
-
         Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
 
         ShadowActivity shadowHome = Robolectric.shadowOf(activity);
 
-        assertThat(shadowHome.peekNextStartedActivityForResult().intent.getComponent(), equalTo(new ComponentName(activity, TrophyActivity.class)));
+        assertThat(shadowHome.peekNextStartedActivityForResult().intent.getComponent(),
+                equalTo(new ComponentName(activity, TrophyActivity.class)));
     }
 
     @Test
@@ -31,5 +31,22 @@ public class MainActivityTest {
         //When MainActivity Create
         //Then Question starts
     }
+
+    @Test
+    public void willShowNextQuestion(){
+
+    }
+
+    @Test
+    public void willShowTrophyForCorrectAnswers(){
+
+    }
+
+    @Test
+    public void willShowFailForAnyIncorrectAnswer(){
+
+    }
+
+    
 
 }
