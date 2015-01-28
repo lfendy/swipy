@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.util.ActivityController;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -35,14 +36,16 @@ public class MainActivityTest {
         //When MainActivity Create
         //Then Question starts
 
-        Activity activity = new MainActivity();
+        ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
+
+        Activity activity = controller.get();
 
         SharedPreferences sharedPreferences = Robolectric.application.getSharedPreferences(activity.getString(R.string.preference_file), Context.MODE_PRIVATE);
         sharedPreferences.edit().putBoolean(activity.getString(R.string.first_trophy), true).commit();
 
-        Activity activityInstance = Robolectric.buildActivity(MainActivity.class).create().get();
-        ShadowActivity shadowHome = Robolectric.shadowOf(activityInstance);
+        controller.create();
 
+        ShadowActivity shadowHome = Robolectric.shadowOf(activity);
         assertThat(shadowHome.peekNextStartedActivityForResult(), is(nullValue()));
 
     }
