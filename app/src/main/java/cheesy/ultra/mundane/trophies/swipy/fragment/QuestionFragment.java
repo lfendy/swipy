@@ -1,10 +1,10 @@
 package cheesy.ultra.mundane.trophies.swipy.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -12,24 +12,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import cheesy.ultra.mundane.trophies.swipy.EndActivity;
-import cheesy.ultra.mundane.trophies.swipy.MainActivity;
 import cheesy.ultra.mundane.trophies.swipy.R;
-import cheesy.ultra.mundane.trophies.swipy.TrophyActivity;
-import cheesy.ultra.mundane.trophies.swipy.questions.HardcodedQs;
 import cheesy.ultra.mundane.trophies.swipy.questions.State;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class QuestionFragment extends Fragment {
-    public static String CURRENT_QUESTION = "current question";
+    public static String CURRENT_QUESTION_ID = "current question id";
+    public static String CURRENT_QUESTION_TEXT = "current question text";
+
+    public interface QuestionEventHandler {
+        public void handleYes(State.Id currentId);
+        public void handleNo(State.Id currentId);
+    }
+
 
     private Point windowSize;
     private Point layoutSize;
 
-    public QuestionFragment() {
-        // Required empty public constructor
+    private QuestionEventHandler questionHandler;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        questionHandler = (QuestionEventHandler)getActivity();
     }
 
     @Override
@@ -40,8 +47,9 @@ public class QuestionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
         final View contentView = view.findViewById(R.id.fullscreen_content);
 
-        final State.Id currentQuestionId = new State.Id((String)getArguments().get(CURRENT_QUESTION));
-        String questionText = HardcodedQs.getStateFromId(currentQuestionId).getText();
+        final State.Id currentQuestionId = new State.Id((String)getArguments().get(CURRENT_QUESTION_ID));
+        final String questionText = (String)getArguments().get(CURRENT_QUESTION_TEXT);
+
         TextView tv = (TextView) contentView;
         tv.setText(questionText);
 
@@ -75,9 +83,9 @@ public class QuestionFragment extends Fragment {
 
                     case MotionEvent.ACTION_UP:
                         if(isYes(touchX)){
-                            startNextQuestionActivity(HardcodedQs.getAfterYes(currentQuestionId));
+                            questionHandler.handleYes(currentQuestionId);
                         }else if (isNo(touchX)){
-                            startNextQuestionActivity(HardcodedQs.getAfterNo(currentQuestionId));
+                            questionHandler.handleNo(currentQuestionId);
                         }else{
                             resetTextView(v);
                         }
@@ -88,20 +96,6 @@ public class QuestionFragment extends Fragment {
             }
         });
         return view;
-    }
-
-    private void replaceFragment(State state) {
-
-        Bundle bundle = new Bundle();
-        bundle.putString(QuestionFragment.CURRENT_QUESTION, state.getId().getInnerId());
-
-        QuestionFragment frag = new QuestionFragment();
-        frag.setArguments(bundle);
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, frag)
-                .commit();
     }
 
     private void resetTextView(View tv) {
@@ -123,16 +117,4 @@ public class QuestionFragment extends Fragment {
         return deltaX < windowSize.x * .25;
     }
 
-    private void startNextQuestionActivity(State next) {
-        if(next.getType() == State.Type.Fail){
-            Intent intent = new Intent(getActivity(), EndActivity.class);
-            getActivity().startActivityForResult(intent, MainActivity.REQ_CODE_TROPHY);
-        } else if (next.getType() == State.Type.Trophy) {
-            Intent intent = new Intent(getActivity(), TrophyActivity.class);
-            intent.putExtra(TrophyActivity.CURRENT_STATE, next.getId().getInnerId());
-            getActivity().startActivityForResult(intent, MainActivity.REQ_CODE_TROPHY);
-        } else {
-            replaceFragment(next);
-        }
-    }
 }

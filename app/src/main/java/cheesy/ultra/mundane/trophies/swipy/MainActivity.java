@@ -20,12 +20,20 @@ import cheesy.ultra.mundane.trophies.swipy.questions.State;
  * @see cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider
  */
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, QuestionFragment.QuestionEventHandler {
 
     public static final int REQ_CODE_TROPHY = 100;
 
     NavigationDrawerFragment mNavigationDrawerFragment;
+
+    @Override
+    public void handleYes(State.Id currentId) {
+        startNextQuestionActivity(HardcodedQs.getAfterYes(currentId));
+    }
+    @Override
+    public void handleNo(State.Id currentId) {
+        startNextQuestionActivity(HardcodedQs.getAfterNo(currentId));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +53,29 @@ public class MainActivity extends ActionBarActivity
             startTrophyActivity();
             
         } else {
-            startQuestionFragment(HardcodedQs.getFirstQuestion().getId());
+            startQuestionFragment(HardcodedQs.getFirstQuestion());
         }
 
         
     }
 
-    private void startQuestionFragment(State.Id current) {
+    private void startNextQuestionActivity(State next) {
+        if(next.getType() == State.Type.Fail){
+            Intent intent = new Intent(this, EndActivity.class);
+            startActivityForResult(intent, REQ_CODE_TROPHY);
+        } else if (next.getType() == State.Type.Trophy) {
+            Intent intent = new Intent(this, TrophyActivity.class);
+            intent.putExtra(TrophyActivity.CURRENT_STATE, next.getId().getInnerId());
+            startActivityForResult(intent, REQ_CODE_TROPHY);
+        } else {
+            startQuestionFragment(next);
+        }
+    }
 
+    public void startQuestionFragment(State current) {
         Bundle bundle = new Bundle();
-        bundle.putString(QuestionFragment.CURRENT_QUESTION, current.getInnerId());
+        bundle.putString(QuestionFragment.CURRENT_QUESTION_TEXT, current.getText());
+        bundle.putString(QuestionFragment.CURRENT_QUESTION_ID, current.getId().getInnerId());
 
         QuestionFragment frag = new QuestionFragment();
         frag.setArguments(bundle);
@@ -89,7 +110,7 @@ public class MainActivity extends ActionBarActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_CODE_TROPHY) {
-            startQuestionFragment(HardcodedQs.getFirstQuestion().getId());
+            startQuestionFragment(HardcodedQs.getFirstQuestion());
         }
     }
 }
