@@ -43,9 +43,12 @@ public class MainActivity extends ActionBarActivity
 
         if (!isCanHazWonFirstTrophy()) {
             startTrophyActivity();
+            
         } else {
             startQuestionFragment(HardcodedQs.getFirstQuestion().getId());
         }
+
+        
     }
 
     private void startQuestionFragment(State.Id current) {

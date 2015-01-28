@@ -3,8 +3,8 @@ package cheesy.ultra.mundane.trophies.swipy;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -26,8 +26,20 @@ public class MainActivityTest {
 
         ShadowActivity shadowHome = Robolectric.shadowOf(activity);
 
-        assertThat(shadowHome.peekNextStartedActivityForResult().intent.getComponent(),
+        assertThat(shadowHome.getNextStartedActivity().getComponent(),
                 equalTo(new ComponentName(activity, TrophyActivity.class)));
+    }
+    
+    @Test
+    public void willSetSharedPrefToTrueForFirstTrophy() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra(TrophyActivity.CURRENT_STATE, "0");
+        Activity activity = Robolectric.buildActivity(TrophyActivity.class).withIntent(intent).create().get();
+
+        SharedPreferences sharedPreferences = Robolectric.application.getSharedPreferences(activity.getString(R.string.preference_file), Context.MODE_PRIVATE);
+
+        assertThat(sharedPreferences.getBoolean(activity.getString(R.string.first_trophy), false), equalTo(true));
+        
     }
 
     @Test
