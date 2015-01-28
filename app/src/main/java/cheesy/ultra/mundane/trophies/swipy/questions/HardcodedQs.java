@@ -27,7 +27,7 @@ public final class HardcodedQs {
             {"3", "5", "N"}
     };
 
-    private static FiniteStateMachine mFsm;
+    public static FiniteStateMachine mFsm;
 
     static {
 
