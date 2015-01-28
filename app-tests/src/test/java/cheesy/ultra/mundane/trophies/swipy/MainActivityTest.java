@@ -126,13 +126,71 @@ public class MainActivityTest {
     }
 
     @Test
-    public void willShowTrophyForCorrectAnswers(){
+    public void willShowTrophyForCorrectYesAnswers(){
+        String[][] questionStates = {
+                {"0", "Question 1", "q"},
+                {"1", "Trophy Yes", "t"}};
 
+        String[][] questionTransitions = {{"0", "1", "Y"}};
+
+        HardcodedQs.mFsm = new FiniteStateMachine(questionStates, questionTransitions);
+
+        MainActivity activity = createMainActivity();
+
+        activity.handleYes(HardcodedQs.getStateFromId(new State.Id("0")).getId());
+
+        assertNextActivity(activity, TrophyActivity.class);
     }
 
     @Test
-    public void willShowFailForAnyIncorrectAnswer(){
+    public void willShowTrophyForCorrectNoAnswers(){
+        String[][] questionStates = {
+                {"0", "Question 1", "q"},
+                {"1", "Trophy No", "t"}};
 
+        String[][] questionTransitions = {{"0", "1", "N"}};
+
+        HardcodedQs.mFsm = new FiniteStateMachine(questionStates, questionTransitions);
+
+        MainActivity activity = createMainActivity();
+
+        activity.handleNo(HardcodedQs.getStateFromId(new State.Id("0")).getId());
+
+        assertNextActivity(activity, TrophyActivity.class);
+    }
+
+    @Test
+    public void willShowFailForAnyIncorrectYesAnswers(){
+        String[][] questionStates = {
+                {"0", "Question 1", "q"},
+                {"1", "Fail Yes", "f"}};
+
+        String[][] questionTransitions = {{"0", "1", "Y"}};
+
+        HardcodedQs.mFsm = new FiniteStateMachine(questionStates, questionTransitions);
+
+        MainActivity activity = createMainActivity();
+
+        activity.handleYes(HardcodedQs.getStateFromId(new State.Id("0")).getId());
+
+        assertNextActivity(activity, EndActivity.class);
+    }
+
+    @Test
+    public void willShowFailForAnyIncorrectNoAnswers(){
+        String[][] questionStates = {
+                {"0", "Question 1", "q"},
+                {"1", "Fail No", "f"}};
+
+        String[][] questionTransitions = {{"0", "1", "N"}};
+
+        HardcodedQs.mFsm = new FiniteStateMachine(questionStates, questionTransitions);
+
+        MainActivity activity = createMainActivity();
+
+        activity.handleNo(HardcodedQs.getStateFromId(new State.Id("0")).getId());
+
+        assertNextActivity(activity, EndActivity.class);
     }
 
 

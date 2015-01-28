@@ -9,6 +9,7 @@ public final class HardcodedQs {
     // [[]]
     //
 
+
     private static String[][] rawStates = {
             {"0", "Frist Timer trophy!", "t"},
             {"1", "yo, mofo, R u @ werk?", "q"},
