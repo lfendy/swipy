@@ -3,4 +3,4 @@
 set -ex
 
 #run tests
-./gradlew clean localTest
+./gradlew clean localTest --stacktrace 
