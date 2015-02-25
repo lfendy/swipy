@@ -3,7 +3,7 @@
     package="cheesy.ultra.mundane.trophies.swipy" >
 
     <uses-sdk android:minSdkVersion="18"
-        android:targetSdkVersion="18"/>
+        android:targetSdkVersion="21"/>
 
     <application
         android:allowBackup="true"
