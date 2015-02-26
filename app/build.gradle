@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "swipy.trophies.mundane.ultra.cheesy.swipy"
         minSdkVersion 16
-        targetSdkVersion 18
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
