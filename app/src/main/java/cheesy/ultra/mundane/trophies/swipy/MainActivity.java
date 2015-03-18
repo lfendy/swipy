@@ -1,7 +1,7 @@
 package cheesy.ultra.mundane.trophies.swipy;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +11,8 @@ import cheesy.ultra.mundane.trophies.swipy.fragment.NavigationDrawerFragment;
 import cheesy.ultra.mundane.trophies.swipy.fragment.QuestionFragment;
 import cheesy.ultra.mundane.trophies.swipy.questions.HardcodedQs;
 import cheesy.ultra.mundane.trophies.swipy.questions.State;
+
+import cheesy.ultra.mundane.trophies.swipy.model.ObtainedTrophyContract;
 
 
 /**
@@ -49,7 +51,7 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        if (!isCanHazWonFirstTrophy()) {
+        if (!hasWonFirstTrophy()) {
             startTrophyActivity();
             
         } else {
@@ -88,13 +90,20 @@ public class MainActivity extends ActionBarActivity
 
     public void startTrophyActivity() {
         Intent intent = new Intent(this, TrophyActivity.class);
-        intent.putExtra(TrophyActivity.CURRENT_STATE, "0");
+        intent.putExtra(TrophyActivity.CURRENT_STATE, HardcodedQs.FIRST_TROPHY_ID);
         startActivity(intent);
     }
 
-    private boolean isCanHazWonFirstTrophy() {
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
-        return prefs.getBoolean(getString(R.string.first_trophy), false);
+    private boolean hasWonFirstTrophy() {
+
+        Cursor cursor = getContentResolver().query(ObtainedTrophyContract.CONTENT_URI,
+                new String[]{ObtainedTrophyContract.NAME},
+                ObtainedTrophyContract.NAME + " = ?",
+                new String[]{HardcodedQs.FIRST_TROPHY_ID},
+                null);
+
+        return cursor.moveToFirst();
+
     }
 
     @Override

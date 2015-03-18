@@ -5,13 +5,15 @@ package cheesy.ultra.mundane.trophies.swipy.questions;
  */
 public final class HardcodedQs {
 
+    public static final String FIRST_TROPHY_ID = "FIRST_TROPHY";
+
+
     //write cheesy.ultra.mundane.trophies.swipy.questions in terms states and transitions
     // [[]]
     //
 
-
     private static String[][] rawStates = {
-            {"0", "Frist Timer trophy!", "t"},
+            {FIRST_TROPHY_ID, "Frist Timer trophy!", "t"},
             {"1", "yo, mofo, R u @ werk?", "q"},
             {"2", "front of desk?", "q"},
             {"3", "watching NSFW?", "q"},

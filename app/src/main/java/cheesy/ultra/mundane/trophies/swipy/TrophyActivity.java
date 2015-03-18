@@ -1,11 +1,13 @@
 package cheesy.ultra.mundane.trophies.swipy;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import cheesy.ultra.mundane.trophies.swipy.model.ObtainedTrophyContract;
 import cheesy.ultra.mundane.trophies.swipy.questions.HardcodedQs;
 import cheesy.ultra.mundane.trophies.swipy.questions.State;
 import cheesy.ultra.mundane.trophies.swipy.util.SystemUiHider;
@@ -60,19 +62,34 @@ public class TrophyActivity extends Activity {
         final View contentView = findViewById(R.id.fullscreen_content);
 
         final State.Id currentStateId = new State.Id((String) getIntent().getSerializableExtra(CURRENT_STATE));
-        String questionText = HardcodedQs.getStateFromId(currentStateId).getText();
+        String trophyText = HardcodedQs.getStateFromId(currentStateId).getText();
         TextView tv = (TextView) contentView;
-        tv.setText(questionText);
+        tv.setText(trophyText);
 
-        setHazWonTrophy();
+        setHazWonTrophy(currentStateId.getInnerId());
     }
 
 
 
-    private void setHazWonTrophy(){
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(getString(R.string.first_trophy), true); //still hardcoded -- need params
-        editor.apply();
+    private void setHazWonTrophy(String trophyId){
+        if(!trophyObtained(trophyId)) addTrophy(trophyId);
+    }
+
+    private void addTrophy(String trophyId) {
+        ContentValues trophyValues = new ContentValues();
+        trophyValues.put(ObtainedTrophyContract.NAME, trophyId);
+
+        System.out.println(getContentResolver().insert(ObtainedTrophyContract.CONTENT_URI, trophyValues));
+    }
+
+
+    private boolean trophyObtained(String trophyId) {
+        Cursor cursor = getContentResolver().query(ObtainedTrophyContract.CONTENT_URI,
+                new String[]{ObtainedTrophyContract.NAME},
+                ObtainedTrophyContract.NAME + " = ?",
+                new String[]{trophyId},
+                null);
+
+        return cursor.moveToFirst();
     }
 }
