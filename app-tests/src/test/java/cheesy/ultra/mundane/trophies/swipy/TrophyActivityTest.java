@@ -8,12 +8,14 @@ import android.content.SharedPreferences;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
+import org.robolectric.annotation.Config;
 
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(RobolectricGradleTestRunner.class)
-//@Config(emulateSdk = 18, reportSdk = 18)
+@Config(emulateSdk = 18, reportSdk = 18)
 public class TrophyActivityTest {
 
     @Test
