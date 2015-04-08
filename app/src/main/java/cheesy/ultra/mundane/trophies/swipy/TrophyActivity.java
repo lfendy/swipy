@@ -79,9 +79,8 @@ public class TrophyActivity extends Activity {
         ContentValues trophyValues = new ContentValues();
         trophyValues.put(ObtainedTrophyContract.NAME, trophyId);
 
-        System.out.println(getContentResolver().insert(ObtainedTrophyContract.CONTENT_URI, trophyValues));
+        getContentResolver().insert(ObtainedTrophyContract.CONTENT_URI, trophyValues);
     }
-
 
     private boolean trophyObtained(String trophyId) {
         Cursor cursor = getContentResolver().query(ObtainedTrophyContract.CONTENT_URI,

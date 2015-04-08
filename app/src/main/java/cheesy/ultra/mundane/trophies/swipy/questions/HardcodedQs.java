@@ -8,16 +8,18 @@ public final class HardcodedQs {
     public static final String FIRST_TROPHY_ID = "FIRST_TROPHY";
 
 
+
     //write cheesy.ultra.mundane.trophies.swipy.questions in terms states and transitions
     // [[]]
     //
 
+    public static final String RISK_TAKER = "RISK_TAKER";
     private static String[][] rawStates = {
             {FIRST_TROPHY_ID, "Frist Timer trophy!", "t"},
             {"1", "yo, mofo, R u @ werk?", "q"},
             {"2", "front of desk?", "q"},
             {"3", "watching NSFW?", "q"},
-            {"4", "Risk taker trophy!", "t"},
+            {RISK_TAKER, "Risk taker trophy!", "t"},
             {"5", "U suck.", "f"}
     };
 
@@ -26,7 +28,7 @@ public final class HardcodedQs {
             {"1", "5", "N"},
             {"2", "3", "Y"},
             {"2", "5", "N"},
-            {"3", "4", "Y"},
+            {"3", RISK_TAKER, "Y"},
             {"3", "5", "N"}
     };
 

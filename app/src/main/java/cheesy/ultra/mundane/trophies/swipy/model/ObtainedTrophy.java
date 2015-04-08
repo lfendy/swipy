@@ -6,7 +6,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.tojc.ormlite.android.annotation.AdditionalAnnotation.*;
 
-@Contract()
+//@Contract()
 @DatabaseTable(tableName="obtained_trophy")
 @DefaultContentUri(authority = "cheesy.ultra.mundane.trophies.swipy.model", path = "obtainedTrophy")
 @DefaultContentMimeTypeVnd(name = "cheesy.ultra.mundane.trophies.swipy.model", type = "obtainedTrophies")
